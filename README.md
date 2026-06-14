@@ -1,25 +1,83 @@
-# SQLi.py 
+<p align="center">
+  <img src="banner.png" alt="PySQLi Banner" width="100%"/>
+</p>
 
-A Python-based SQL Injection detection and analysis tool built for security testing and educational use. Test only on systems you own or have explicit permission to test.
-
----
-
-## What It Does
-
-- Detects SQL injection vulnerabilities using multiple techniques
-- Supports GET and POST requests
-- Generates an HTML report with scan results
-- Rotates user agents to mimic real browser traffic
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.7+-3fb950?style=for-the-badge&logo=python&logoColor=white&labelColor=0d1117"/>
+  <img src="https://img.shields.io/badge/version-2.0-58a6ff?style=for-the-badge&labelColor=0d1117"/>
+  <img src="https://img.shields.io/badge/license-MIT-8b949e?style=for-the-badge&labelColor=0d1117"/>
+  <img src="https://img.shields.io/badge/use-ethical%20only-ff4444?style=for-the-badge&labelColor=0d1117"/>
+</p>
 
 ---
 
-## Requirements
+```
+██████╗ ██╗   ██╗███████╗ ██████╗ ██╗     ██╗
+██╔══██╗╚██╗ ██╔╝██╔════╝██╔═══██╗██║     ██║
+██████╔╝ ╚████╔╝ ███████╗██║   ██║██║     ██║
+██╔═══╝   ╚██╔╝  ╚════██║██║▄▄ ██║██║     ██║
+██║        ██║   ███████║╚██████╔╝███████╗██║
+╚═╝        ╚═╝   ╚══════╝ ╚══▀▀═╝ ╚══════╝╚═╝
+                                 
+```
 
-Python 3.7+ and the following packages:
+---
+
+## What is this?
+
+PySQLi is a Python-based SQL injection scanner built for learning and practice. Give it a URL, it tries different payloads and tells you if the site is vulnerable. If it is, it can pull basic database info too. A report gets saved after every scan.
+
+Use it on your own sites, local labs, or CTF challenges.
+
+> ⚠️ Only test sites you own or have permission to test.
+
+---
+
+## Setup on Kali Linux
+
+Python comes pre-installed on Kali. Just run:
 
 ```
-pip install -r requirements.txt
+git clone https://github.com/yourname/PySQLi.git
+cd PySQLi
+pip install -r requirements.txt --break-system-packages
 ```
+
+---
+
+## How to Run
+
+**Check if a site is vulnerable:**
+```
+python main.py -u "http://site.com/page.php?id=1" --detect
+```
+
+**Pull database info if vulnerable:**
+```
+python main.py -u "http://site.com/page.php?id=1" --dump
+```
+
+**Test a login form:**
+```
+python main.py -u "http://site.com/login.php" --method POST --data "user=admin&pass=1"
+```
+
+**Use a specific technique:**
+```
+python main.py -u "http://site.com/page.php?id=1" --technique time
+```
+
+---
+
+## Techniques
+
+| Flag | What it does |
+|------|-------------|
+| `error` | Triggers database error messages |
+| `boolean` | Compares true/false responses |
+| `time` | Detects injection via response delay |
+| `union` | Tries to extract data using UNION SELECT |
+| `all` | Runs everything — this is the default |
 
 ---
 
@@ -27,65 +85,34 @@ pip install -r requirements.txt
 
 ```
 PySQLi/
-├── main.py               # Entry point
-├── config.py             # Payloads, timeouts, settings
+├── main.py               # start here
+├── config.py             # payloads and settings
 ├── requirements.txt
 ├── modules/
-│   ├── detector.py       # Vulnerability detection logic
-│   ├── exploiter.py      # Basic database enumeration
-│   ├── payloads.py       # Payload loader
-│   └── reporter.py       # HTML report generator
+│   ├── detector.py       # finds the vulnerability
+│   ├── exploiter.py      # tries to extract db info
+│   ├── payloads.py       # loads payloads
+│   └── reporter.py       # generates the HTML report
 └── utils/
-    └── http_utils.py     # HTTP request handler
+    └── http_utils.py     # handles requests
 ```
 
 ---
 
-## Usage
+## Report
 
-**Detect only:**
-```bash
-python main.py -u "http://target.com/page.php?id=1" --detect
-```
+After every scan a file is saved automatically:
 
-**Detect + dump database info:**
-```bash
-python main.py -u "http://target.com/page.php?id=1" --dump
-```
-
-**POST request:**
-```bash
-python main.py -u "http://target.com/login.php" --method POST --data "user=admin&pass=1"
-```
-
-**Use a specific technique:**
-```bash
-python main.py -u "http://target.com/page.php?id=1" --technique time
-```
-
----
-
-## Techniques
-
-| Flag | Description |
-|------|-------------|
-| `error` | Triggers database error messages |
-| `boolean` | True/false response comparison |
-| `time` | Detects blind injection via response delay |
-| `union` | Extracts data using UNION SELECT |
-| `all` | Runs all techniques (default) |
-
----
-
-## Output
-
-A timestamped HTML report is saved automatically after each scan:
 ```
 PySQLi_Report_20240101_120000.html
 ```
 
+Open it in any browser — it shows the target, technique used, payload that worked, and the results.
+
 ---
 
-## Disclaimer
+> For learning purposes only. Do not use without permission.
 
-This tool is for **educational and authorized testing only**. Unauthorized use against systems you don't own is illegal. The author is not responsible for any misuse.
+---
+
+<p align="center">Made by <strong>Soha Waris</strong></p>
