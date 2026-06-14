@@ -1,4 +1,4 @@
-# SQLi.py v2.0
+# SQLi.py 
 
 A Python-based SQL Injection detection and analysis tool built for security testing and educational use. Test only on systems you own or have explicit permission to test.
 
